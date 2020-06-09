@@ -30,3 +30,10 @@ export function updateUserInfoAPI(data) {
         data
     })
 }
+export function subCreditAPI(id,data) {
+    return axios({
+        url: `${api.userPre}/${data.id}/userInfo/update`,
+        method: 'POST',
+        data
+    })
+}

@@ -21,10 +21,14 @@
     <!--        delete from OrderList where id=#{orderid}-->
     <!--&#45;&#45;         select * from OrderList-->
     <!--    </select>-->
-    <delete id="annulOrder">
-        delete from OrderList where id=#{orderid}
-    </delete>
-
+<!--    <delete id="annulOrder">-->
+<!--        delete from OrderList where id=#{orderid}-->
+<!--    </delete>-->
+    <update id="annulOrder">
+        update OrderList
+            set orderState="已撤销"
+        where id=#{orderid}
+    </update>
     <resultMap id="Order" type="com.example.hotel.po.Order">
     </resultMap>
 </mapper>

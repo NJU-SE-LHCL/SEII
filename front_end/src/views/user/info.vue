@@ -175,7 +175,7 @@ export default {
             'updateUserInfo',
             'cancelOrder',
             'getOrderDetail',
-
+            'subCredit',
         ]),
         saveModify() {
             this.form.validateFields((err, values) => {
@@ -205,6 +205,7 @@ export default {
         },
         confirmCancelOrder(orderId){
             this.cancelOrder(orderId)
+            this.subCredit()
         },
         cancelCancelOrder() {
 
@@ -212,7 +213,7 @@ export default {
         orderDetail(record){
             this.set_orderId(record.id)
             this.set_detailVisible(true)
-            this.getOrderDetail()
+            this.getOrderDetail(record.id)
         }
     }
 }

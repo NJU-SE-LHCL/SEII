@@ -39,6 +39,9 @@
             <a-form-item label="用户电话" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }">
                 <span>{{ orderDetailForUser.phoneNumber }}</span>
             </a-form-item>
+            <a-form-item label="金额" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }">
+                <span>{{ orderDetailForUser.price }}</span>
+            </a-form-item>
             <a-form-item label="订单中状态" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }">
                 <span>{{ orderDetailForUser.orderState }}</span>
             </a-form-item>

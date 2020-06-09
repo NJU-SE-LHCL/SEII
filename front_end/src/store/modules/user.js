@@ -8,6 +8,7 @@ import {
     registerAPI,
     getUserInfoAPI,
     updateUserInfoAPI,
+    subCreditAPI
 } from '@/api/user'
 
 import {
@@ -33,7 +34,6 @@ const getDefaultState = () => {
 
 const user = {
     state : getDefaultState(),
-
     mutations: {
         reset_state: function(state) {
             state.token = '',
@@ -155,6 +155,14 @@ const user = {
                 resolve()
             })
         },
+        subCredit:async ({commit,state},data)=>{
+            const mon = await getOrderDetailAPI(data)
+            const res = await subCreditAPI(state.userId,(mon.price)/2)
+            if(res){
+                commit('sub_credit',(mon.price)/2)
+            }
+        }
+
     }
 }
 
