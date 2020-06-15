@@ -1,6 +1,7 @@
 import {
     addRoomAPI,
     addHotelAPI,
+    updateHotelAPI,
 } from '@/api/hotelManager'
 import {
     getAllOrdersAPI,
@@ -11,6 +12,10 @@ import {
     hotelAllCouponsAPI,
     hotelTargetMoneyAPI,
 } from '@/api/coupon'
+import {
+    getHotelByIdAPI,
+
+} from "@/api/hotel";
 
 import { message } from 'ant-design-vue'
 //import {cancelOrderAPI} from "../../api/order";
@@ -46,6 +51,9 @@ const hotelManager = {
         activeHotelId: 0,
         activeOrderId:0,//
         couponList: [],
+        hotelVisible:false,//
+        hotelInfo:{},//
+
     },
     mutations: {
         set_orderList: function(state, data) {
@@ -90,8 +98,13 @@ const hotelManager = {
         },
         set_orderDetail:function (state,data) {//
             state.orderDetail=data
+        },
+        set_hotelVisible:function(state,data){//
+            state.hotelVisible=data
+        },
+        set_hotelInfo:function (state,data) {//
+            state.hotelInfo=data
         }
-
     },
     actions: {
         getAllOrders: async({ state, commit }) => {
@@ -170,6 +183,24 @@ const hotelManager = {
                     commit('set_orderDetail',res)
                 }
         },
+        getHotelInfo:async ({state,commit})=>{
+            const param={
+                hotelId:state.activeHotelId
+            }
+            const res= await getHotelByIdAPI(param)
+                if(res){
+                    commit('set_hotelInfo',res)
+                }
+
+        },
+        setHotelInfo:async ({state,commit},data)=>{
+            const res = await updateHotelAPI(data)
+             if(res) {
+                 commit('set_hotelInfo',data)
+             }
+
+
+        }
     }
 }
 export default hotelManager

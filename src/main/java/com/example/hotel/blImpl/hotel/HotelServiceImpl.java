@@ -90,6 +90,19 @@ public class HotelServiceImpl implements HotelService {
 
         return hotelVO;
     }
+    @Override
+    public void updateHotelInfo(Integer hotelId,HotelVO hotelVO){
+        Hotel hotel = new Hotel();
+        hotel.setDescription(hotelVO.getDescription());
+        hotel.setAddress(hotelVO.getAddress());
+        hotel.setHotelName(hotelVO.getName());
+        hotel.setPhoneNum(hotelVO.getPhoneNum());
+        hotel.setManagerId(hotelVO.getManagerId());
+        hotel.setRate(hotelVO.getRate());
+        hotel.setBizRegion(BizRegion.valueOf(hotelVO.getBizRegion()));
+        hotel.setHotelStar(HotelStar.valueOf(hotelVO.getHotelStar()));
+        hotelMapper.updateHotelInfo(hotelId,hotel);
+    }
 
 
 }

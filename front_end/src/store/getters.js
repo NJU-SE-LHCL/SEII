@@ -28,6 +28,8 @@ const getters = {
   activeOrderId:state=>state.hotelManager.activeHotelId,//
   orderDetailVisible:state=>state.hotelManager.orderDetailVisible,//
   orderDetail:state=>state.hotelManager.orderDetail,//
+  hotelInfo:state=>state.hotelManager.hotelInfo,//
+  hotelVisible:state=>state.hotelManager.hotelVisible,//
   }
   
   export default getters

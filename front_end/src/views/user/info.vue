@@ -205,7 +205,7 @@ export default {
         },
         confirmCancelOrder(orderId){
             this.cancelOrder(orderId)
-            this.subCredit()
+            this.subCredit(orderId)
         },
         cancelCancelOrder() {
 

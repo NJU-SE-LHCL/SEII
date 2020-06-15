@@ -29,6 +29,8 @@ const getDefaultState = () => {
         detail:false,
         activeOrderID:0,
         orderDetailForUser:{},
+
+
     }
 }
 
@@ -71,6 +73,9 @@ const user = {
         set_userOrderList: (state, data) => {
             state.userOrderList = data
         },
+        sub_credit:(state,data)=>{
+            state.userInfo.credit-=data
+        }
 
     },
 
@@ -157,7 +162,11 @@ const user = {
         },
         subCredit:async ({commit,state},data)=>{
             const mon = await getOrderDetailAPI(data)
-            const res = await subCreditAPI(state.userId,(mon.price)/2)
+            const params={
+                id:state.userId,
+                num:(mon.price)/2
+            }
+            const res = await subCreditAPI(params)
             if(res){
                 commit('sub_credit',(mon.price)/2)
             }

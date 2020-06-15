@@ -10,6 +10,7 @@
         <!-- 这里是添加策略模态框区域，请编写表单 -->
 
         <a-form :form="form" style="margin-top: 30px" >
+
             <a-form-item label="酒店名" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }">
                 <span>{{ orderDetail.hotelName }}</span>
             </a-form-item>

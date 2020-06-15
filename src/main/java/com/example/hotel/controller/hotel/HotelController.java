@@ -41,7 +41,11 @@ public class HotelController {
     public ResponseVO retrieveHotelDetail(@PathVariable Integer hotelId) {
         return ResponseVO.buildSuccess(hotelService.retrieveHotelDetails(hotelId));
     }
-
+    @PostMapping("/{hotelId}/updateHotel")
+    public ResponseVO updateHotelInfo(@PathVariable Integer hotelId,@RequestBody HotelVO hotelVO){
+        hotelService.updateHotelInfo(hotelId,hotelVO);
+        return ResponseVO.buildSuccess();
+    }
 
 
 }

@@ -48,5 +48,8 @@ public class AccountController {
         return accountService.updateUserInfo(id,userInfoVO.getPassword(),userInfoVO.getUserName(),userInfoVO.getPhoneNumber());
 
     }
-
+    @PostMapping("/{id}/subCredit")
+    public ResponseVO subCredit(@RequestBody UserVO userVO,@PathVariable int id){
+        return accountService.subCredit(id,userVO.getCredit());
+    }
 }

@@ -14,3 +14,4 @@ export function getHotelByIdAPI(param) {
         method: 'GET',
     })
 }
+

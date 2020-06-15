@@ -46,7 +46,7 @@ public interface HotelService {
      * @return
      */
     int getRoomCurNum(Integer hotelId,String roomType);
-
+    void updateHotelInfo(Integer hotelId,HotelVO hotelVo);
 
 
 

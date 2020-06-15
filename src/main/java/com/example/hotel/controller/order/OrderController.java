@@ -47,4 +47,5 @@ public class OrderController {
     public ResponseVO getOrderDetail(@PathVariable Integer orderid){
         return ResponseVO.buildSuccess(orderService.getOrderDetail(orderid));
     }
+
 }

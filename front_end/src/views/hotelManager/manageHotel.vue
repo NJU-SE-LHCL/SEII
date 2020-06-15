@@ -15,6 +15,8 @@
                         <a-divider type="vertical"></a-divider>
                         <a-button type="info" size="small" @click="showCoupon(record)">优惠策略</a-button>
                         <a-divider type="vertical"></a-divider>
+                        <a-button type="info" size="small" @click="showHotel(record)">维护信息</a-button>
+                        <a-divider type="vertical"></a-divider>
                         <a-popconfirm
                             title="确定想删除该酒店吗？"
                             @confirm="deleteHotel(record)"
@@ -60,6 +62,7 @@
         <AddRoomModal></AddRoomModal>
         <Coupon></Coupon>
         <OrderDetail></OrderDetail>
+        <HotelInfo></HotelInfo>
     </div>
 </template>
 <script>
@@ -68,6 +71,7 @@ import AddHotelModal from './components/addHotelModal'
 import AddRoomModal from './components/addRoomModal'
 import Coupon from './components/coupon'
 import OrderDetail from './components/orderDetail'
+import HotelInfo from "./components/hotelInfo";
 import {getOrderDetail} from "../../api/order";
 const moment = require('moment')
 const columns1 = [
@@ -155,6 +159,7 @@ export default {
         AddRoomModal,
         Coupon,
         OrderDetail,//
+        HotelInfo,//
     },
     computed: {
         ...mapGetters([
@@ -180,14 +185,18 @@ export default {
             'set_couponVisible',
             'set_activeHotelId',
             'set_orderDetailVisible',//
-            'set_activeOrderId'//
+            'set_activeOrderId',//
+            'set_hotelVisible',//
+
         ]),
         ...mapActions([
             'getHotelList',
             'getAllOrders',
             'getHotelCoupon',
             'annulOrder',
-            'getOrderDetail'
+            'getOrderDetail',
+            'getHotelInfo',
+
         ]),
         addHotel() {
             this.set_addHotelModalVisible(true)
@@ -211,6 +220,11 @@ export default {
             this.set_activeOrderId(record.id)
             this.set_orderDetailVisible(true)
             this.getOrderDetail()
+        },
+        showHotel(record){
+            this.set_activeHotelId(record.id)
+            this.set_hotelVisible(true)
+            this.getHotelInfo()
         }
 
     }
