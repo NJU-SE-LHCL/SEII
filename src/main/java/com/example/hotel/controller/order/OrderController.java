@@ -47,5 +47,8 @@ public class OrderController {
     public ResponseVO getOrderDetail(@PathVariable Integer orderid){
         return ResponseVO.buildSuccess(orderService.getOrderDetail(orderid));
     }
-
+    @GetMapping("/{orderid}/checkInOrder")
+    public ResponseVO checkInOrder(@PathVariable Integer orderid){
+        return ResponseVO.buildSuccess(orderService.checkInOrder(orderid));
+    }
 }

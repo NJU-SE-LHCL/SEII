@@ -33,3 +33,9 @@ export function getOrderDetailAPI(orderId) {
         method:'GET',
     })
 }
+export function checkInOrderAPI(orderid) {
+    return axios({
+        url: `${api.orderPre}/${orderid}/checkInOrder`,
+        method: 'GET',
+    })
+}

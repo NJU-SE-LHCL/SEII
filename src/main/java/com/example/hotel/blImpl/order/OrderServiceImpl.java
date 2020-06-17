@@ -89,4 +89,9 @@ public class OrderServiceImpl implements OrderService {
     public Order getOrderDetail(Integer orderid){
         return orderMapper.getOrderById(orderid);
     }
+    @Override
+    public ResponseVO checkInOrder(Integer orderid){
+        orderMapper.checkInOrder(orderid);
+        return ResponseVO.buildSuccess();
+    }
 }

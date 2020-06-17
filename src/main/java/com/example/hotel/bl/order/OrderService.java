@@ -47,4 +47,5 @@ public interface OrderService {
     List<Order> getHotelOrders(Integer hotelId);
 
     Order getOrderDetail(Integer orderid);
+    ResponseVO checkInOrder(Integer orderid);
 }
