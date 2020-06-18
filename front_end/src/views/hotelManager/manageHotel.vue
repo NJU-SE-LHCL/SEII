@@ -58,7 +58,7 @@
                         <a-divider type="vertical"></a-divider>
                         <a-popconfirm
                             title="确定想删除该订单吗？"
-                            @confirm="deleteOrder(record)"
+                            @confirm="delOrder(record)"
                             okText="确定"
                             cancelText="取消"
                         >
@@ -208,6 +208,7 @@ export default {
             'getOrderDetail',
             'getHotelInfo',
             'checkInOrder',
+            'deleteOrder',
         ]),
         addHotel() {
             this.set_addHotelModalVisible(true)
@@ -224,8 +225,8 @@ export default {
         deleteHotel(){
 
         },
-        deleteOrder(record){
-            this.annulOrder(record.id)
+        delOrder(record){
+            this.deleteOrder(record.id)
         },
         showOrderDetail(record){
             this.set_activeOrderId(record.id)

@@ -8,6 +8,7 @@ import {
     cancelOrderAPI,
     getOrderDetailAPI,//+
     checkInOrderAPI,
+    deleteOrderAPI,
 } from '@/api/order'
 import {
     hotelAllCouponsAPI,
@@ -203,14 +204,19 @@ const hotelManager = {
 
         },
         checkInOrder:async ({commit,dispatch,state},data)=>{
-            const res = await checkInOrderAPI(data)
-            if(res) {
-                dispatch('getUserOrders')
-                message.success('执行成功')
-            }else{
-                message.error('执行失败')
+            await checkInOrderAPI(data)
+            const res = await getAllOrdersAPI()
+            if(res){
+                commit('set_orderList', res)
             }
-        }
+        },
+        deleteOrder:async ({commit,dispatch,state},data)=>{
+            await deleteOrderAPI(data)
+            const res = await getAllOrdersAPI()
+            if(res){
+                commit('set_orderList', res)
+            }
+}
     }
 }
 export default hotelManager

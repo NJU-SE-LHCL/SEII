@@ -94,4 +94,10 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.checkInOrder(orderid);
         return ResponseVO.buildSuccess();
     }
+    @Override
+    public ResponseVO deleteOrder(Integer orderid){
+        orderMapper.deleteOrder(orderid);
+        return ResponseVO.buildSuccess();
+    }
+
 }

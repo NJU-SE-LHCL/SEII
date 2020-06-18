@@ -39,3 +39,9 @@ export function checkInOrderAPI(orderid) {
         method: 'GET',
     })
 }
+export function deleteOrderAPI(orderid) {
+    return axios({
+        url: `${api.orderPre}/${orderid}/deleteOrder`,
+        method: 'GET',
+    })
+}

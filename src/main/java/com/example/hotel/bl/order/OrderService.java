@@ -48,4 +48,5 @@ public interface OrderService {
 
     Order getOrderDetail(Integer orderid);
     ResponseVO checkInOrder(Integer orderid);
+    ResponseVO deleteOrder(Integer orderid);
 }

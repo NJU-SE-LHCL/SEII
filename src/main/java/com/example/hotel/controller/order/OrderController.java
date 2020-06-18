@@ -51,4 +51,9 @@ public class OrderController {
     public ResponseVO checkInOrder(@PathVariable Integer orderid){
         return ResponseVO.buildSuccess(orderService.checkInOrder(orderid));
     }
+    @GetMapping("/{orderid}/deleteOrder")
+    public ResponseVO deleteOrder(@PathVariable Integer orderid){
+        return ResponseVO.buildSuccess(orderService.deleteOrder(orderid));
+    }
+
 }
