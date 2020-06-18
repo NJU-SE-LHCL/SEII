@@ -55,5 +55,8 @@ public class OrderController {
     public ResponseVO deleteOrder(@PathVariable Integer orderid){
         return ResponseVO.buildSuccess(orderService.deleteOrder(orderid));
     }
-
+    @GetMapping("/{orderid}/setAbnormalOrder")
+    public ResponseVO setAbnormalOrder(@PathVariable Integer orderid){
+        return ResponseVO.buildSuccess(orderService.setAbnormalOrder(orderid));
+    }
 }

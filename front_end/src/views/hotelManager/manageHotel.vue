@@ -187,8 +187,8 @@ export default {
     },
     async mounted() {
         await this.getHotelList()
-        //await this.checkRoomState()
         await this.getAllOrders()
+        //await this.checkRoomState()
     },
     methods: {
         ...mapMutations([
@@ -211,6 +211,7 @@ export default {
             'checkInOrder',
             'deleteOrder',
             'addCredit',
+            'checkRoomState',
         ]),
         addHotel() {
             this.set_addHotelModalVisible(true)
@@ -245,8 +246,9 @@ export default {
             this.checkInOrder()
             this.addCredit()
         },
-
-
+        checkRoomState(){
+            this.checkRoomState()
+        }
     }
 }
 </script>

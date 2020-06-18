@@ -99,5 +99,10 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.deleteOrder(orderid);
         return ResponseVO.buildSuccess();
     }
+    @Override
+    public ResponseVO setAbnormalOrder(Integer orderid){
+        orderMapper.setAbnormalOrder(orderid);
+        return ResponseVO.buildSuccess();
+    }
 
 }

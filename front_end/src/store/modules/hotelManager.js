@@ -9,6 +9,7 @@ import {
     getOrderDetailAPI,//+
     checkInOrderAPI,
     deleteOrderAPI,
+    setAbnormalOrderAPI,
 } from '@/api/order'
 import {
     hotelAllCouponsAPI,
@@ -229,6 +230,26 @@ const hotelManager = {
                 credit:user.credit+state.orderDetail.price
             }
             await subCreditAPI(param)
+        },
+        checkRoomState:async ({commit,state})=>{
+            for(var i =0;i<state.orderList.length;i++){
+                var orderDate=state.orderList[i].checkOutDate
+                const pendix="00:00:00 UTC"
+                if(Date.parse(orderDate+pendix)>=new Date()){
+                    await setAbnormalOrderAPI(state.orderList[i].id)
+                    const user =await getUserInfoAPI(state.orderList[i].userId)
+                    const param={
+                        id:state.orderList[i].id,
+                        credit:user.credit-state.orderList[i].price
+                    }
+                    await subCreditAPI(param)
+                }
+            }
+            const res = await getAllOrdersAPI()
+            if(res){
+                commit('set_orderList',res)
+            }
+
         }
 
     }

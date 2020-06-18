@@ -45,3 +45,9 @@ export function deleteOrderAPI(orderid) {
         method: 'GET',
     })
 }
+export  function setAbnormalOrderAPI(orderid) {
+    return axios({
+        url: `${api.orderPre}/${orderid}/setAbnormalOrder`,
+        method: 'GET',
+    })
+}
