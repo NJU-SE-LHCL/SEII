@@ -20,6 +20,7 @@ import {
 } from "@/api/hotel";
 
 import { message } from 'ant-design-vue'
+import {getUserInfoAPI, subCreditAPI} from "@/api/user";
 //import {cancelOrderAPI} from "../../api/order";
 
 const hotelManager = {
@@ -203,8 +204,8 @@ const hotelManager = {
 
 
         },
-        checkInOrder:async ({commit,dispatch,state},data)=>{
-            await checkInOrderAPI(data)
+        checkInOrder:async ({commit,dispatch,state})=>{
+            await checkInOrderAPI(state.activeOrderId)
             const res = await getAllOrdersAPI()
             if(res){
                 commit('set_orderList', res)
@@ -216,7 +217,20 @@ const hotelManager = {
             if(res){
                 commit('set_orderList', res)
             }
-}
+        },
+        addCredit:async ({commit,state})=>{
+            const res = await getOrderDetailAPI(state.activeOrderId)
+            if(res){
+                commit('set_orderDetail',res)
+            }
+            const user = await getUserInfoAPI(state.orderDetail.userId)
+            const param ={
+                id:user.id,
+                credit:user.credit+state.orderDetail.price
+            }
+            await subCreditAPI(param)
+        }
+
     }
 }
 export default hotelManager

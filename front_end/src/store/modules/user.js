@@ -164,7 +164,7 @@ const user = {
             const mon = await getOrderDetailAPI(data)
             const params={
                 id:state.userId,
-                num:(mon.price)/2
+                credit:state.userInfo.credit-(mon.price)/2
             }
             const res = await subCreditAPI(params)
             if(res){

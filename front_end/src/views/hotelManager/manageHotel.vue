@@ -187,6 +187,7 @@ export default {
     },
     async mounted() {
         await this.getHotelList()
+        //await this.checkRoomState()
         await this.getAllOrders()
     },
     methods: {
@@ -209,6 +210,7 @@ export default {
             'getHotelInfo',
             'checkInOrder',
             'deleteOrder',
+            'addCredit',
         ]),
         addHotel() {
             this.set_addHotelModalVisible(true)
@@ -239,7 +241,9 @@ export default {
             this.getHotelInfo()
         },
         confirmCheckIn(id){
-            this.checkInOrder(id)
+            this.set_activeOrderId(id)
+            this.checkInOrder()
+            this.addCredit()
         },
 
 
