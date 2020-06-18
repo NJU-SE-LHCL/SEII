@@ -30,6 +30,9 @@ const getters = {
   orderDetail:state=>state.hotelManager.orderDetail,//
   hotelInfo:state=>state.hotelManager.hotelInfo,//
   hotelVisible:state=>state.hotelManager.hotelVisible,//
+  //hotel
+
+  tag:state=>state.hotel.tag,
   }
   
   export default getters
