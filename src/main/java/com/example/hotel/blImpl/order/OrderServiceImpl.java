@@ -104,5 +104,11 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.setAbnormalOrder(orderid);
         return ResponseVO.buildSuccess();
     }
-
+    @Override
+    public List<Order> getUserOrdersForHotel(Integer userid,Integer hotelid){
+        List<Order> orders=orderMapper.getAllOrders();
+        List<Order> res = orders.stream().filter(order -> (order.getHotelId().equals(hotelid) && order.getUserId().equals(userid))).collect(Collectors.toList());
+        System.out.println(res);
+        return res;
+    }
 }

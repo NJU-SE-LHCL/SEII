@@ -7,6 +7,7 @@ import {
 import {
     reserveHotelAPI,
     getUserOrdersAPI,
+    getUserOrdersForHotelAPI,
 } from '@/api/order'
 import {
     orderMatchCouponsAPI,
@@ -36,9 +37,12 @@ const hotel = {
 
         ],
         tag:'',
-
+        userOrdersForHotel:{},
     },
     mutations: {
+        set_userOrdersForHotel:function(state,data){
+          state.userOrdersForHotel=data
+        },
         set_tag:function(state,data){
           state.tag=data
         },
@@ -127,7 +131,18 @@ const hotel = {
             }
 
         },
+        getUserOrdersForHotel:async ({commit,state})=>{
+            const param={
+                userId:state.userId,
+                hotelId:state.currentHotelId,
+            }
+          const res= await getUserOrdersForHotelAPI(param)
 
+            if(res){
+                message.success(res)
+                commit('set_userOrdersForHotel',res)
+            }
+        },
     }
 }
 

@@ -42,6 +42,7 @@
             set orderState="异常"
         where id=#{orderid}
     </update>
+
     <resultMap id="Order" type="com.example.hotel.po.Order">
     </resultMap>
 </mapper>

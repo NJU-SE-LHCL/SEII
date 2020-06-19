@@ -51,3 +51,14 @@ export  function setAbnormalOrderAPI(orderid) {
         method: 'GET',
     })
 }
+export function getUserOrdersForHotelAPI(data) {
+    return axios({
+        url: `${api.orderPre}/getUserOrdersForHotel`,
+        method:'GET',
+        params:{
+            hotelid:data.hotelId,
+            userid:data.userId,
+        }
+
+    })
+}

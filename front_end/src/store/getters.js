@@ -31,7 +31,7 @@ const getters = {
   hotelInfo:state=>state.hotelManager.hotelInfo,//
   hotelVisible:state=>state.hotelManager.hotelVisible,//
   //hotel
-
+  userOrdersForHotel: state=>state.hotel.userOrdersForHotel,
   tag:state=>state.hotel.tag,
   }
   

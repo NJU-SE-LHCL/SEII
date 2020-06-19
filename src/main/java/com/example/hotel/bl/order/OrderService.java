@@ -50,4 +50,5 @@ public interface OrderService {
     ResponseVO checkInOrder(Integer orderid);
     ResponseVO deleteOrder(Integer orderid);
     ResponseVO setAbnormalOrder(Integer orderid);
+    List<Order> getUserOrdersForHotel(Integer userid,Integer hotelid);
 }
