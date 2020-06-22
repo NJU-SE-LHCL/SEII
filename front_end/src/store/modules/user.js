@@ -24,9 +24,7 @@ const getDefaultState = () => {
         userInfo: {
 
         },
-        userOrderList: [
-
-        ],
+        userOrderList: [],
         detail:false,
         activeOrderID:0,
         orderDetailForUser:{},

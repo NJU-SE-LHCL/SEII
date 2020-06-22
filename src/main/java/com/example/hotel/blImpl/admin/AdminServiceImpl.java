@@ -6,6 +6,8 @@ import com.example.hotel.enums.UserType;
 import com.example.hotel.po.User;
 import com.example.hotel.vo.ResponseVO;
 import com.example.hotel.vo.UserForm;
+import com.example.hotel.vo.UserVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,7 @@ import java.util.List;
 @Service
 public class AdminServiceImpl implements AdminService {
     private final static String ACCOUNT_EXIST = "账号已存在";
+    private final static String UPDATE_FAILURE = "更新失败";
     @Autowired
     AdminMapper adminMapper;
     @Override
@@ -26,11 +29,13 @@ public class AdminServiceImpl implements AdminService {
         user.setEmail(userForm.getEmail());
         user.setPassword(userForm.getPassword());
         user.setUserType(UserType.HotelManager);
-        try {
-            adminMapper.addManager(user);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        String email=user.getEmail();
+        int count=adminMapper.judge_exist(email);//判断个数，如果已存在，添加失败
+        if(count==1){
             return ResponseVO.buildFailure(ACCOUNT_EXIST);
+        }
+        else {
+            adminMapper.addManager(user);
         }
         return ResponseVO.buildSuccess(true);
     }
@@ -39,4 +44,26 @@ public class AdminServiceImpl implements AdminService {
     public List<User> getAllManagers() {
         return adminMapper.getAllManagers();
     }
+
+    @Override
+    public ResponseVO deleteUser(Integer userid) {
+        try {
+            adminMapper.deleteUser(userid);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return ResponseVO.buildSuccess(true);
+    }
+    @Override
+    public ResponseVO updateInfo(int id, String email,String password,String username,double credit,String phonenumber){
+        try {
+            adminMapper.updateAccount(id,email, password, username,credit, phonenumber);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseVO.buildFailure(UPDATE_FAILURE);
+        }
+        return ResponseVO.buildSuccess(true);
+    }
+
 }
+
