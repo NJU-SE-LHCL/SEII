@@ -45,6 +45,26 @@
                     <a-tab-pane tab="酒店详情" key="2">
 
                     </a-tab-pane>
+                    <a-tab-pane tab="我的订单" key="3">
+                        <a-table
+                            :columns="columns"
+                            :dataSource="userOrdersForHotel"
+                            bordered
+                        >
+                            <span slot="price" slot-scope="text">
+                                <span>￥{{ text }}</span>
+                            </span>
+                                <span slot="roomType" slot-scope="text">
+                                <span v-if="text == 'BigBed'">大床房</span>
+                                <span v-if="text == 'DoubleBed'">双床房</span>
+                                <span v-if="text == 'Family'">家庭房</span>
+                            </span>
+                                <a-tag slot="orderState" color="blue" slot-scope="text">
+                                    {{ text }}
+                                </a-tag>
+                                
+                        </a-table>
+                    </a-tab-pane>
                 </a-tabs>
             </div>
         </a-layout-content>
@@ -53,24 +73,73 @@
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 import RoomList from './components/roomList'
+const columns = [
+    {
+        title: '订单号',
+        dataIndex: 'id',
+    },
+    {
+        title: '酒店名',
+        dataIndex: 'hotelName',
+    },
+    {
+        title: '房型',
+        dataIndex: 'roomType',
+        scopedSlots: { customRender: 'roomType' }
+    },
+    {
+        title: '入住时间',
+        dataIndex: 'checkInDate',
+        scopedSlots: { customRender: 'checkInDate' }
+    },
+    {
+        title: '离店时间',
+        dataIndex: 'checkOutDate',
+        scopedSlots: { customRender: 'checkOutDate' }
+    },
+    {
+        title: '入住人数',
+        dataIndex: 'peopleNum',
+    },
+    {
+        title: '房价',
+        dataIndex: 'price',
+    },
+    {
+        title: '状态',
+        filters: [{ text: '已预订', value: '已预订' }, { text: '已撤销', value: '已撤销' }, { text: '已入住', value: '已入住' }],
+        onFilter: (value, record) => record.orderState.includes(value),
+        dataIndex: 'orderState',
+        scopedSlots: { customRender: 'orderState' }
+    },
+
+
+];
 export default {
+
     name: 'hotelDetail',
     components: {
         RoomList,
     },
     data() {
         return {
-
+            formLayout: 'horizontal',
+            pagination: {},
+            columns,
+            data: [],
+            form: this.$form.createForm(this, { name: 'hotelDetail' }),
         }
     },
     computed: {
         ...mapGetters([
             'currentHotelInfo',
+            'userOrdersForHotel',
         ])
     },
     mounted() {
         this.set_currentHotelId(Number(this.$route.params.hotelId))
         this.getHotelById()
+        this.getUserOrdersForHotel()
     },
     beforeRouteUpdate(to, from, next) {
         this.set_currentHotelId(Number(to.params.hotelId))
@@ -82,7 +151,8 @@ export default {
             'set_currentHotelId',
         ]),
         ...mapActions([
-            'getHotelById'
+            'getHotelById',
+            'getUserOrdersForHotel',
         ])
     }
 }

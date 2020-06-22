@@ -15,6 +15,7 @@ import {
     getUserOrdersAPI,
     cancelOrderAPI,
     getOrderDetailAPI,
+
 } from '@/api/order'
 
 const getDefaultState = () => {
@@ -29,8 +30,7 @@ const getDefaultState = () => {
         detail:false,
         activeOrderID:0,
         orderDetailForUser:{},
-
-
+        hotelInfo:{},
     }
 }
 
@@ -164,13 +164,22 @@ const user = {
             const mon = await getOrderDetailAPI(data)
             const params={
                 id:state.userId,
-                num:(mon.price)/2
+                credit:state.userInfo.credit-(mon.price)/2
             }
             const res = await subCreditAPI(params)
             if(res){
                 commit('sub_credit',(mon.price)/2)
             }
-        }
+        },
+        routeToHotel:async ({commit,state},data)=>{
+            const res=await getOrderDetailAPI(data)
+            if (res){
+                commit("set_orderDetail",res)
+                router.push('/hotel/hotelDetail/'+state.orderDetailForUser.hotelId)
+            }
+
+        },
+
 
     }
 }

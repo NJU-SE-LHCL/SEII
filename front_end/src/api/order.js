@@ -33,3 +33,32 @@ export function getOrderDetailAPI(orderId) {
         method:'GET',
     })
 }
+export function checkInOrderAPI(orderid) {
+    return axios({
+        url: `${api.orderPre}/${orderid}/checkInOrder`,
+        method: 'GET',
+    })
+}
+export function deleteOrderAPI(orderid) {
+    return axios({
+        url: `${api.orderPre}/${orderid}/deleteOrder`,
+        method: 'GET',
+    })
+}
+export  function setAbnormalOrderAPI(orderid) {
+    return axios({
+        url: `${api.orderPre}/${orderid}/setAbnormalOrder`,
+        method: 'GET',
+    })
+}
+export function getUserOrdersForHotelAPI(data) {
+    return axios({
+        url: `${api.orderPre}/getUserOrdersForHotel`,
+        method:'GET',
+        params:{
+            hotelid:data.hotelId,
+            userid:data.userId,
+        }
+
+    })
+}

@@ -66,7 +66,9 @@
                         {{ text }}
                     </a-tag>
                     <span slot="action" slot-scope="record">
-                        <a-button type="primary" size="small" @click="orderDetail(record)">查看</a-button>
+                        <a-button type="primary" size="small" @click="orderDetail(record)">查看订单</a-button>
+                        <a-divider type="vertical"></a-divider>
+                        <a-button tpye="primary" size="small" @click="route(record)">查看酒店</a-button>
                         <a-divider type="vertical" v-if="record.orderState == '已预订'"></a-divider>
                         <a-popconfirm
                             title="你确定撤销该笔订单吗？"
@@ -176,6 +178,7 @@ export default {
             'cancelOrder',
             'getOrderDetail',
             'subCredit',
+            'routeToHotel',
         ]),
         saveModify() {
             this.form.validateFields((err, values) => {
@@ -214,6 +217,9 @@ export default {
             this.set_orderId(record.id)
             this.set_detailVisible(true)
             this.getOrderDetail(record.id)
+        },
+        route(record){
+            this.routeToHotel(record.id)
         }
     }
 }

@@ -44,10 +44,21 @@
                     </span>
                     <span slot="action" slot-scope="record">
                         <a-button type="primary" size="small" @click="showOrderDetail(record)">订单详情</a-button>
+                        <a-divider type="vertical" v-if="record.orderState=='已预订'"></a-divider>
+                            <a-popconfirm
+                                    title="你确定客户已入住吗？"
+                                    @confirm="confirmCheckIn(record.id)"
+                                    @cancel="cancelCancelOrder"
+                                    okText="确定"
+                                    cancelText="取消"
+                                    v-if="record.orderState == '已预订'"
+                            >
+                            <a-button type="info" size="small">确认执行</a-button>
+                        </a-popconfirm>
                         <a-divider type="vertical"></a-divider>
                         <a-popconfirm
                             title="确定想删除该订单吗？"
-                            @confirm="deleteOrder(record)"
+                            @confirm="delOrder(record)"
                             okText="确定"
                             cancelText="取消"
                         >
@@ -177,6 +188,7 @@ export default {
     async mounted() {
         await this.getHotelList()
         await this.getAllOrders()
+        //await this.checkRoomState()
     },
     methods: {
         ...mapMutations([
@@ -196,7 +208,10 @@ export default {
             'annulOrder',
             'getOrderDetail',
             'getHotelInfo',
-
+            'checkInOrder',
+            'deleteOrder',
+            'addCredit',
+            'checkRoomState',
         ]),
         addHotel() {
             this.set_addHotelModalVisible(true)
@@ -213,8 +228,8 @@ export default {
         deleteHotel(){
 
         },
-        deleteOrder(record){
-            this.annulOrder(record.id)
+        delOrder(record){
+            this.deleteOrder(record.id)
         },
         showOrderDetail(record){
             this.set_activeOrderId(record.id)
@@ -225,8 +240,15 @@ export default {
             this.set_activeHotelId(record.id)
             this.set_hotelVisible(true)
             this.getHotelInfo()
+        },
+        confirmCheckIn(id){
+            this.set_activeOrderId(id)
+            this.checkInOrder()
+            this.addCredit()
+        },
+        checkRoomState(){
+            this.checkRoomState()
         }
-
     }
 }
 </script>

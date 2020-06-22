@@ -5,14 +5,18 @@ import {
     getHotelByIdAPI
 } from '@/api/hotel'
 import {
-    reserveHotelAPI
+    reserveHotelAPI,
+    getUserOrdersAPI,
+    getUserOrdersForHotelAPI,
 } from '@/api/order'
 import {
     orderMatchCouponsAPI,
 } from '@/api/coupon'
 
+
 const hotel = {
     state: {
+        userId:0,
         hotelList: [
             
         ],
@@ -31,9 +35,20 @@ const hotel = {
         },
         orderMatchCouponList: [
 
-        ]
+        ],
+        tag:'',
+        userOrdersForHotel:{},
     },
     mutations: {
+        set_userOrdersForHotel:function(state,data){
+          state.userOrdersForHotel=data
+        },
+        set_tag:function(state,data){
+          state.tag=data
+        },
+        set_userId:function(state,data){
+            state.userId=data
+        },
         set_hotelList: function(state, data) {
             state.hotelList = data
         },
@@ -98,7 +113,36 @@ const hotel = {
             if(res){
                 commit('set_orderMatchCouponList', res)
             }
-        }
+        },
+        getTagByHotelId:async ({state,commit})=>{
+            const param={
+                userId:state.userId,
+            }
+            const orderDetail=await getUserOrdersAPI(param)
+
+            for(let i =0;i<orderDetail.length;i++){
+                if(orderDetail[i].orderState==="已执行"){
+                    commit('set_tag',"完成订单")
+                }
+                else if(orderDetail[i].orderState==="已撤销"){
+                    commit('set_tag',"撤销订单")
+                    break
+                }
+            }
+
+        },
+        getUserOrdersForHotel:async ({commit,state})=>{
+            const param={
+                userId:state.userId,
+                hotelId:state.currentHotelId,
+            }
+          const res= await getUserOrdersForHotelAPI(param)
+
+            if(res){
+                message.success(res)
+                commit('set_userOrdersForHotel',res)
+            }
+        },
     }
 }
 

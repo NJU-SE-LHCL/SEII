@@ -6,6 +6,8 @@ import com.example.hotel.vo.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 /**
  * @Author: chenyizong
  * @Date: 2020-02-29
@@ -47,5 +49,20 @@ public class OrderController {
     public ResponseVO getOrderDetail(@PathVariable Integer orderid){
         return ResponseVO.buildSuccess(orderService.getOrderDetail(orderid));
     }
-
+    @GetMapping("/{orderid}/checkInOrder")
+    public ResponseVO checkInOrder(@PathVariable Integer orderid){
+        return ResponseVO.buildSuccess(orderService.checkInOrder(orderid));
+    }
+    @GetMapping("/{orderid}/deleteOrder")
+    public ResponseVO deleteOrder(@PathVariable Integer orderid){
+        return ResponseVO.buildSuccess(orderService.deleteOrder(orderid));
+    }
+    @GetMapping("/{orderid}/setAbnormalOrder")
+    public ResponseVO setAbnormalOrder(@PathVariable Integer orderid){
+        return ResponseVO.buildSuccess(orderService.setAbnormalOrder(orderid));
+    }
+    @GetMapping("/getUserOrdersForHotel")
+    public ResponseVO getUserOrdersForHotel(@RequestParam Integer userid,@RequestParam Integer hotelid){
+        return ResponseVO.buildSuccess(orderService.getUserOrdersForHotel(userid,hotelid));
+    }
 }
