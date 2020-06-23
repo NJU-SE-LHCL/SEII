@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.hotel.data.admin.AdminMapper">
-    <insert id="addManager" parameterType="com.example.hotel.po.User" useGeneratedKeys="true" keyProperty="id">
-        insert into User(email,password,usertype)
-        values(#{email},#{password},#{userType})
+    <insert id="addUser" parameterType="com.example.hotel.po.User" useGeneratedKeys="true" keyProperty="id">
+        insert into User(email,password,username,phonenumber,credit,usertype)
+        values(#{email},#{password},#{userName},#{phoneNumber},#{credit},#{userType})
     </insert>
     <select id="getAllManagers" resultMap="User">
         select * from User where usertype='HotelManager'

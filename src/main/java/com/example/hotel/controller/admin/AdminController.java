@@ -19,9 +19,9 @@ public class AdminController {
     AdminService adminService;
 
     @PostMapping("/addManager")
-    public ResponseVO addManager(@RequestBody UserForm userForm) {
+    public ResponseVO addManager(@RequestBody UserVO uservo) {
 
-        return adminService.addManager(userForm);
+        return adminService.addManager(uservo);
     }
 
     @PostMapping("/getAllManagers")

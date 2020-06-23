@@ -24,18 +24,16 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     AdminMapper adminMapper;
     @Override
-    public ResponseVO addManager(UserForm userForm) {
+    public ResponseVO addManager(UserVO uservo) {
         User user = new User();
-        user.setEmail(userForm.getEmail());
-        user.setPassword(userForm.getPassword());
-        user.setUserType(UserType.HotelManager);
+        BeanUtils.copyProperties(uservo,user);
         String email=user.getEmail();
         int count=adminMapper.judge_exist(email);//判断个数，如果已存在，添加失败
         if(count==1){
             return ResponseVO.buildFailure(ACCOUNT_EXIST);
         }
         else {
-            adminMapper.addManager(user);
+            adminMapper.addUser(user);
         }
         return ResponseVO.buildSuccess(true);
     }

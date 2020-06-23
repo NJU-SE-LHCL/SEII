@@ -9,19 +9,39 @@
             :maskStyle="{'opacity':'0.2','animation':'none'}"
     >
         <a-Form :form="form">
-            <a-form-item v-bind="formItemLayout" label="用户邮箱">
+            <a-form-item v-bind="formItemLayout" label="用户名">
                 <a-input
+                        placeholder="请填写用户名"
                         v-decorator="[
-                        'email',
-                        { rules: [{required: true, message: '请输入用户邮箱', }] }
+                        'userName',
+                        { rules: [{required: true, message: '请输入用户名', }] }
                     ]"
                 />
             </a-form-item>
             <a-form-item v-bind="formItemLayout" label="密码">
                 <a-input
+                        placeholder="请填写用户密码"
                         v-decorator="[
                         'password',
                         { rules: [{required: true, message: '请输入密码', }] }
+                    ]"
+                />
+            </a-form-item >
+            <a-form-item v-bind="formItemLayout" label="邮箱">
+                <a-input
+                        placeholder="请填写用户邮箱"
+                        v-decorator="[
+                        'email',
+                        { rules: [{required: true, message: '请输入用户邮箱', }] }
+                    ]"
+                />
+            </a-form-item >
+            <a-form-item v-bind="formItemLayout" label="电话">
+                <a-input
+                        placeholder="请填写用户电话"
+                        v-decorator="[
+                        'phoneNumber',
+                        { rules: [{required: true, message: '请输入用户电话', }] }
                     ]"
                 />
             </a-form-item >
@@ -61,7 +81,7 @@
         methods: {
             ...mapMutations([
                 'set_addManagerModalVisible',
-                'set_addManagerParams',
+                'set_addUserParams',
             ]),
             ...mapActions([
                 'getManagerList',
@@ -76,10 +96,15 @@
                     if (!err) {
                         const data = {
                             email: this.form.getFieldValue('email'),
-                            password: this.form.getFieldValue('password')
+                            password: this.form.getFieldValue('password'),
+                            userName:this.form.getFieldValue('userName'),
+                            phoneNumber:this.form.getFieldValue('phoneNumber'),
+                            userType:'HotelManager'
                         }
-                        this.set_addManagerParams(data)
-                        this.addManager()
+                        this.set_addUserParams(data)
+                        this.addManager().then(()=>{
+                            this.form.resetFields()
+                        })
                     }
                 });
             },

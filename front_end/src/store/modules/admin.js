@@ -12,9 +12,13 @@ const admin = {
         managerList: [],
         addManagerModalVisible: false,
         updateUserModalVisible:false,
-        addManagerParams: {
+        addUserParams: {
             email:'',
-            password:''
+            password:'',
+            userName:'',
+            userType:'',
+            phoneNumber:'',
+            credit:0,
         },
         userInfo:{
             id:0,
@@ -33,11 +37,13 @@ const admin = {
         set_addManagerModalVisible: function (state, data) {
             state.addManagerModalVisible = data
         },
-        set_addManagerParams: function (state, data) {
-            state.addManagerParams = {
-                ...state.addManagerParams,
+        set_addUserParams: function (state, data) {
+            state.addUserParams = {
+                ...state.addUserParams,
                 ...data,
             }
+
+
         },
         set_updateUserModalVisible: function (state, data) {
             state.updateUserModalVisible = data
@@ -60,11 +66,15 @@ const admin = {
             }
         },
         addManager: async ({state, commit, dispatch}) => {
-            const res = await addManagerAPI(state.addManagerParams)
+            const res = await addManagerAPI(state.addUserParams)
             if (res) {
-                commit('set_addManagerParams', {
-                    email: '',
-                    password: ''
+                commit('set_addUserParams', {
+                    email:'',
+                    password:'',
+                    userName:'',
+                    userType:'',
+                    phoneNumber:'',
+                    credit:0,
                 })
                 commit('set_addManagerModalVisible', false)
                 message.success('添加成功')

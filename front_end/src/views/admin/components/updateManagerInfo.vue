@@ -13,16 +13,17 @@
                 <a-input
                         v-decorator="[
                                     'email',
-                                    { rules: [{ required: true, message: 'Please input your email' }] },]"
-                        :placeholder='$store.state.admin.userInfo.email'/>
+                                    {initialValue:$store.state.admin.userInfo.email, rules: [{ required: true,
+                                    message: '请输入邮箱' }] },]"
+                        />
             </a-form-item>
 
             <a-form-item label="用户名">
                 <a-input
                         v-decorator="[
                                     'username',
-                                    { rules: [{ required: true, message: 'Please input your name' }] },]"
-                        :placeholder='$store.state.admin.userInfo.username'/>
+                                    {initialValue:$store.state.admin.userInfo.userName,rules: [{ required: true, message: '请输入用户名' }] },]"
+                        />
             </a-form-item>
 
 
@@ -30,32 +31,38 @@
                 <a-input
                         v-decorator="[
                                     'password',
-                                    { rules: [{ required: true, message: 'Please input your password' }] },]"
-                        :placeholder='$store.state.admin.userInfo.password'/>
+                                    {initialValue:$store.state.admin.userInfo.password,rules: [{ required: true,
+                                    message:
+                                    '请输入用户密码' }] },]"
+                        />
             </a-form-item>
 
             <a-form-item label="电话号码">
                 <a-input
                         v-decorator="[
                                     'phoneNumber',
-                                    { rules: [{ required: true, message: 'Please input your phonenumber' }] },]"
-                        :placeholder='$store.state.admin.userInfo.phoneNumber'/>
+                                    {initialValue:$store.state.admin.userInfo.phoneNumber,rules: [{ required: true,
+                                    message:
+                                    '请输入电话号码' }] },]"
+                        />
             </a-form-item>
 
             <a-form-item label="信用值">
                 <a-input
                         v-decorator="[
                                     'credit',
-                                    { rules: [{ required: true, message: 'Please input your credit' }] },]"
-                        :placeholder='$store.state.admin.userInfo.credit'/>
+                                    {initialValue:$store.state.admin.userInfo.credit, rules: [{ required: true,
+                                     message: 'Please input your credit' }] },]"
+                        />
             </a-form-item>
 
             <a-form-item label="用户权限">
                 <a-input
                         v-decorator="[
                                     'userType',
-                                    { rules: [{ required: true, message: 'Please input your usertype' }] },]"
-                        :placeholder='$store.state.admin.userInfo.userType'/>
+                                    {initialValue:$store.state.admin.userInfo.userType, rules: [{ required: true,
+                                    message: 'Please input your usertype' }] },]"
+                        />
             </a-form-item>
         </a-Form>
     </a-modal>
@@ -63,7 +70,7 @@
 
 <script>
     import { mapGetters, mapMutations, mapActions } from 'vuex'
-    import{message} from 'ant-design-vue'
+    import { message } from 'ant-design-vue'
     export default {
         name: "updateManagerInfo",
         data() {
