@@ -149,7 +149,7 @@ const hotel = {
           const res= await getUserOrdersForHotelAPI(param)
 
             if(res){
-                message.success(res)
+
                 commit('set_userOrdersForHotel',res)
             }
         },
@@ -168,39 +168,53 @@ const hotel = {
             switch (data.type) {
                 case "price":
                     list.sort(sortPrice)
+                    if (data.order==="从高到低"){
+                        list.reverse();
+                    }
                     break
                 case "star":
                     list.sort(sortStar)
+                    if (data.order==="从高到低"){
+                        list.reverse();
+                    }
                     break
                 case "rate":
                     list.sort(sortRate)
+                    if (data.order==="从高到低"){
+                        list.reverse();
+                    }
                     break
             }
-            if (data.order==="从低到高"){
-                list.reverse();
-            }
+
             commit('set_hotelList',list)
+        },
+        minPrice:async ({commit,state},data)=>{
+            message.success(data.id)
+          commit('getHotelById',data.id)
+
+          let rooms= state.currentHotelInfo.rooms
+            let res = 10000;
+            for(let i =0; i<rooms.length; i++){
+
+                if(rooms[i].price<res){
+                    res=rooms[i].price
+                }
+            }
+            return res
         },
 
     }
 
 }
 function sortPrice(a,b){
-    return minPrice(a.rooms)-minPrice(b.price);
+
+    return a.rate-b.rate;
 }
 function sortRate(a,b){
     return a.rate-b.rate;
 }
 function sortStar(a,b){
-    return a.hotelStar-b.hotelStar;
+    return a.rate-b.rate;
 }
-function minPrice(a) {
-    let res = 10000;
-    for(let i =0; i<a.length; i++){
-        if(a.price<res){
-            res=a.price
-        }
-    }
-    return res
-}
+
 export default hotel

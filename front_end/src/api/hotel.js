@@ -17,9 +17,6 @@ export function getHotelByIdAPI(param) {
 }
 
 export function getFilteredHotelsAPI(data) {
-    message.success(data.name)
-    message.success(data.bizRegion)
-    message.success(data.address)
     return axios({
         url: `${api.hotelPre}/getFilteredHotels`,
         method:'GET',

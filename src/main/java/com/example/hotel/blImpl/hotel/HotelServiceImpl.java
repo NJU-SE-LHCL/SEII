@@ -112,14 +112,9 @@ public class HotelServiceImpl implements HotelService {
         List<HotelVO> res= new ArrayList<>();
         System.out.println(temp.get(0).getAddress());
         for(int i=0;i<temp.size();i++){
-            System.out.println(temp.get(i).getName().contains(searchVO.getName()));
-            System.out.println(temp.get(i).getAddress().contains(searchVO.getAddress()));
-            System.out.println(temp.get(i).getBizRegion().contains(searchVO.getBizRegion()));
-            System.out.println((searchVO.getLowerRate()<=temp.get(i).getRate()));
-            System.out.println(temp.get(i).getRate()<=searchVO.getUpperRate());
-            System.out.println(temp.get(i).getName().contains(searchVO.getName()));
+
             List<HotelRoom> rooms=roomService.retrieveHotelRoomInfo(temp.get(i).getId());
-            if(searchVO.getAddress().equals(searchVO.getName())&&searchVO.getAddress().equals(searchVO.getBizRegion())&& !searchVO.getName().equals("")){
+            if(searchVO.getAddress().equals(searchVO.getName())&&searchVO.getCheckInDate().equals("0")){
                 if(temp.get(i).getName().contains(searchVO.getName()) ||temp.get(i).getAddress().contains(searchVO.getAddress())||temp.get(i).getBizRegion().contains(searchVO.getBizRegion())){
                     res.add(temp.get(i));
                 }

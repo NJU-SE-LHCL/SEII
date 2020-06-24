@@ -40,12 +40,15 @@
                 -
                 <a-input-number v-model="upperPrice" @change="changeUpperPrice" :min="0" :max="100000"/>
             </a-form-item>
-            <a-form-item v-bind="formItemLayout" label="有空房期间">
+            <a-form-item v-bind="formItemLayout" label="住宿时间">
                 <a-range-picker
                         format="YYYY-MM-DD"
                         @change="changeDate"
                         v-decorator="[
                         'date',
+                        {
+                            rules: [{ required: true, message: '请选择入住时间' }]
+                        }
                     ]"
                         :placeholder="['入住日期','退房日期']"
                 />
@@ -107,7 +110,7 @@
 
 
             handleSubmit(e) {
-                this.$message.success('刚开始')
+
 
                 //e.preventDefault();
                 this.form.validateFieldsAndScroll((err, values) => {
@@ -125,7 +128,7 @@
                             upperRate: this.upperRate,
                             bizRegion:this.form.getFieldValue('bizRegion')?this.form.getFieldValue('bizRegion'):'',
                         }
-                        this.$message.success(data)
+
                         this.set_searchValue(data)
                         this.updateHotelList()
                         this.set_detailSearchVisible(false)
