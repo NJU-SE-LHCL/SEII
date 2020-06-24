@@ -18,9 +18,11 @@ import com.example.hotel.util.ServiceException;
 import com.example.hotel.vo.CouponVO;
 import com.example.hotel.vo.HotelVO;
 import com.example.hotel.vo.RoomVO;
+import com.example.hotel.vo.SearchVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -103,6 +105,38 @@ public class HotelServiceImpl implements HotelService {
         hotel.setHotelStar(HotelStar.valueOf(hotelVO.getHotelStar()));
         hotelMapper.updateHotelInfo(hotelId,hotel);
     }
+    @Override
+    public List<HotelVO> getFilteredHotels(SearchVO searchVO){
 
+        List<HotelVO> temp=hotelMapper.selectAllHotel();
+        List<HotelVO> res= new ArrayList<>();
+        System.out.println(temp.get(0).getAddress());
+        for(int i=0;i<temp.size();i++){
+            System.out.println(temp.get(i).getName().contains(searchVO.getName()));
+            System.out.println(temp.get(i).getAddress().contains(searchVO.getAddress()));
+            System.out.println(temp.get(i).getBizRegion().contains(searchVO.getBizRegion()));
+            System.out.println((searchVO.getLowerRate()<=temp.get(i).getRate()));
+            System.out.println(temp.get(i).getRate()<=searchVO.getUpperRate());
+            System.out.println(temp.get(i).getName().contains(searchVO.getName()));
+            List<HotelRoom> rooms=roomService.retrieveHotelRoomInfo(temp.get(i).getId());
+            if(searchVO.getAddress().equals(searchVO.getName())&&searchVO.getAddress().equals(searchVO.getBizRegion())&& !searchVO.getName().equals("")){
+                if(temp.get(i).getName().contains(searchVO.getName()) ||temp.get(i).getAddress().contains(searchVO.getAddress())||temp.get(i).getBizRegion().contains(searchVO.getBizRegion())){
+                    res.add(temp.get(i));
+                }
+            }
+            else if(temp.get(i).getName().contains(searchVO.getName()) &&temp.get(i).getAddress().contains(searchVO.getAddress())&&temp.get(i).getBizRegion().contains(searchVO.getBizRegion())
+            && (searchVO.getLowerRate()<=temp.get(i).getRate()&&temp.get(i).getRate()<=searchVO.getUpperRate())){
+                for (int k = 0; k < rooms.size(); k++) {
+                    if ((searchVO.getLowerPrice() <= rooms.get(k).getPrice() && searchVO.getUpperPrice() >= rooms.get(k).getPrice()) && rooms.get(k).getRoomType().toString().equals(searchVO.getRoomType())) {
+                        res.add(temp.get(i));
+                        break;
+                    }
+                }
+
+            }
+
+        }
+        return res;
+    }
 
 }

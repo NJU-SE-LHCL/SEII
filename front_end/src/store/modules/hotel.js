@@ -2,12 +2,14 @@ import { message } from 'ant-design-vue'
 import store from '@/store'
 import {
     getHotelsAPI,
-    getHotelByIdAPI
+    getHotelByIdAPI,
+    getFilteredHotelsAPI,
 } from '@/api/hotel'
 import {
     reserveHotelAPI,
     getUserOrdersAPI,
     getUserOrdersForHotelAPI,
+
 } from '@/api/order'
 import {
     orderMatchCouponsAPI,
@@ -38,6 +40,8 @@ const hotel = {
         ],
         tag:'',
         userOrdersForHotel:{},
+        searchValue:{},
+        detailSearchVisible:false,
     },
     mutations: {
         set_userOrdersForHotel:function(state,data){
@@ -81,6 +85,12 @@ const hotel = {
         },
         set_orderMatchCouponList: function(state, data) {
             state.orderMatchCouponList = data
+        },
+        set_searchValue:function (state,data) {
+            state.searchValue=data
+        },
+        set_detailSearchVisible:function (state,data) {
+            state.detailSearchVisible=data
         }
     },
 
@@ -143,7 +153,54 @@ const hotel = {
                 commit('set_userOrdersForHotel',res)
             }
         },
-    }
-}
+        updateHotelList:async ({commit,state})=> {
 
+            const res = await getFilteredHotelsAPI(state.searchValue)
+            if(res){
+                commit('set_hotelList',res)
+                commit('set_hotelListLoading',false)
+            }
+
+        },
+        reorderHotelList:async ({commit,state},data)=>{
+          const list = state.hotelList
+
+            switch (data.type) {
+                case "price":
+                    list.sort(sortPrice)
+                    break
+                case "star":
+                    list.sort(sortStar)
+                    break
+                case "rate":
+                    list.sort(sortRate)
+                    break
+            }
+            if (data.order==="从低到高"){
+                list.reverse();
+            }
+            commit('set_hotelList',list)
+        },
+
+    }
+
+}
+function sortPrice(a,b){
+    return minPrice(a.rooms)-minPrice(b.price);
+}
+function sortRate(a,b){
+    return a.rate-b.rate;
+}
+function sortStar(a,b){
+    return a.hotelStar-b.hotelStar;
+}
+function minPrice(a) {
+    let res = 10000;
+    for(let i =0; i<a.length; i++){
+        if(a.price<res){
+            res=a.price
+        }
+    }
+    return res
+}
 export default hotel

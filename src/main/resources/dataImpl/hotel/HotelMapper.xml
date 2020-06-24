@@ -13,7 +13,19 @@
     <select id="selectById" resultMap="Hotel">
         select * from Hotel where id=#{id}
     </select>
-
+    <update id="updateHotelInfo">
+        update Hotel
+            <set>
+                hotelName=#{hotel.hotelName},
+                hotelDescription=#{hotel.description},
+                address=#{hotel.address},
+                bizRegion=#{hotel.bizRegion},
+                hotelStar=#{hotel.hotelStar},
+                phoneNum=#{hotel.phoneNum},
+                rate=#{hotel.rate},
+            </set>
+            where id=#{hotelId}
+    </update>
 
     <resultMap id="Hotel" type="com.example.hotel.vo.HotelVO">
         <id column="id" property="id"></id>

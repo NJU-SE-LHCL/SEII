@@ -1,4 +1,5 @@
 import { axios } from '@/utils/request'
+import {message} from "ant-design-vue";
 const api = {
     hotelPre: '/api/hotel'
 }
@@ -15,3 +16,25 @@ export function getHotelByIdAPI(param) {
     })
 }
 
+export function getFilteredHotelsAPI(data) {
+    message.success(data.name)
+    message.success(data.bizRegion)
+    message.success(data.address)
+    return axios({
+        url: `${api.hotelPre}/getFilteredHotels`,
+        method:'GET',
+        params:{
+            data:data,
+            // name:data.data,
+            // bizRegion:data.bizRegion,
+            // address:data.address,
+            // roomType:data.roomType,
+            // lowerPrice:data.lowerPrice,
+            // upperPrice:data.upperPrice,
+            // lowerRate:data.lowerRate,
+            // upperRate:data.upperPrice,
+            // checkInData:data.checkInData,
+            // checkOutDate:data.checkOutDate,
+        }
+    })
+}

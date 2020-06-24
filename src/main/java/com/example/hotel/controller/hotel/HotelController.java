@@ -6,8 +6,11 @@ import com.example.hotel.po.HotelRoom;
 import com.example.hotel.util.ServiceException;
 import com.example.hotel.vo.HotelVO;
 import com.example.hotel.vo.ResponseVO;
+import com.example.hotel.vo.SearchVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/hotel")
@@ -46,6 +49,22 @@ public class HotelController {
         hotelService.updateHotelInfo(hotelId,hotelVO);
         return ResponseVO.buildSuccess();
     }
-
-
+    @GetMapping("/getFilteredHotels")
+    public ResponseVO getFilteredHotels(@RequestParam String data){
+        System.out.println(data);
+        String[] source = data.split(",");
+        SearchVO searchVO = new SearchVO();
+        searchVO.setAddress(source[1].split("\":\"")[1].substring(0,source[1].split("\":\"")[1].length()-1));
+        searchVO.setBizRegion(source[9].split("\":\"")[1].substring(0,source[9].split("\":\"")[1].length()-1));
+        searchVO.setCheckInDate(source[2].split("\"")[2].substring(1));
+        searchVO.setCheckOutDate(source[3].split("\"")[2].substring(1));
+        searchVO.setName(source[0].split("\":\"")[1].substring(0,source[0].split("\":\"")[1].length()-1));
+        searchVO.setRoomType(source[4].split("\":\"")[1].substring(0,source[4].split("\":\"")[1].length()-1));
+        searchVO.setLowerPrice(Integer.valueOf(source[5].split("\"")[2].substring(1)));
+        searchVO.setUpperPrice(Integer.valueOf(source[6].split("\"")[2].substring(1)));
+        searchVO.setLowerRate(Integer.valueOf(source[7].split("\"")[2].substring(1)));
+        searchVO.setUpperRate(Integer.valueOf(source[8].split("\"")[2].substring(1)));
+        //return ResponseVO.buildSuccess();
+        return ResponseVO.buildSuccess(hotelService.getFilteredHotels(searchVO));
+    }
 }

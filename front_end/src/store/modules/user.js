@@ -7,7 +7,7 @@ import {
     loginAPI,
     registerAPI,
     getUserInfoAPI,
-    updateUserInfoAPI,
+    updateUserInfoAPI,//
     subCreditAPI
 } from '@/api/user'
 

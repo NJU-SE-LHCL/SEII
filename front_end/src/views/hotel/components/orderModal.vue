@@ -190,11 +190,13 @@
         },
         methods: {
             ...mapMutations([
-                'set_orderModalVisible'
+                'set_orderModalVisible',
+
             ]),
             ...mapActions([
                 'addOrder',
-                'getOrderMatchCoupons'
+                'getOrderMatchCoupons',
+
             ]),
             cancelOrder() {
                 this.set_orderModalVisible(false)
