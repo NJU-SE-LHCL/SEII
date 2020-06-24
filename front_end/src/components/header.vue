@@ -1,5 +1,6 @@
 <template>
     <div class="header">
+
         <div class="label">
             <img src="@/assets/logo.svg" class="logo" alt="logo" @click="jumpToHome">
             <span class="title">NJUSE 酒店管理系统</span>

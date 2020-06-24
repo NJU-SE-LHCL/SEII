@@ -4,11 +4,9 @@ import com.example.hotel.bl.admin.AdminService;
 import com.example.hotel.blImpl.admin.AdminServiceImpl;
 import com.example.hotel.vo.ResponseVO;
 import com.example.hotel.vo.UserForm;
+import com.example.hotel.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Author: chenyizong
@@ -21,15 +19,24 @@ public class AdminController {
     AdminService adminService;
 
     @PostMapping("/addManager")
-    public ResponseVO addManager(@RequestBody UserForm userForm){
+    public ResponseVO addManager(@RequestBody UserVO uservo) {
 
-        return adminService.addManager(userForm);
+        return adminService.addManager(uservo);
     }
 
     @PostMapping("/getAllManagers")
-    public ResponseVO getAllManagers(){
+    public ResponseVO getAllManagers() {
         return ResponseVO.buildSuccess(adminService.getAllManagers());
     }
 
+    @GetMapping("/{userId}/deleteUser")
+    public ResponseVO deleteUser(@PathVariable Integer userId) {
+        return adminService.deleteUser(userId);
+    }
 
+    @PostMapping("/{id}/userInfo/update")
+    public ResponseVO updateUserInfo(@RequestBody UserVO uservo){
+        return adminService.updateInfo(uservo.getId(),uservo.getEmail(),uservo.getPassword(),uservo.getUserName(),
+                uservo.getCredit(), uservo.getPhoneNumber());
+    }
 }

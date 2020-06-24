@@ -2,12 +2,14 @@ import { message } from 'ant-design-vue'
 import store from '@/store'
 import {
     getHotelsAPI,
-    getHotelByIdAPI
+    getHotelByIdAPI,
+    getFilteredHotelsAPI,
 } from '@/api/hotel'
 import {
     reserveHotelAPI,
     getUserOrdersAPI,
     getUserOrdersForHotelAPI,
+
 } from '@/api/order'
 import {
     orderMatchCouponsAPI,
@@ -38,6 +40,8 @@ const hotel = {
         ],
         tag:'',
         userOrdersForHotel:{},
+        searchValue:{},
+        detailSearchVisible:false,
     },
     mutations: {
         set_userOrdersForHotel:function(state,data){
@@ -81,6 +85,12 @@ const hotel = {
         },
         set_orderMatchCouponList: function(state, data) {
             state.orderMatchCouponList = data
+        },
+        set_searchValue:function (state,data) {
+            state.searchValue=data
+        },
+        set_detailSearchVisible:function (state,data) {
+            state.detailSearchVisible=data
         }
     },
 
@@ -139,11 +149,72 @@ const hotel = {
           const res= await getUserOrdersForHotelAPI(param)
 
             if(res){
-                message.success(res)
+
                 commit('set_userOrdersForHotel',res)
             }
         },
+        updateHotelList:async ({commit,state})=> {
+
+            const res = await getFilteredHotelsAPI(state.searchValue)
+            if(res){
+                commit('set_hotelList',res)
+                commit('set_hotelListLoading',false)
+            }
+
+        },
+        reorderHotelList:async ({commit,state},data)=>{
+          const list = state.hotelList
+
+            switch (data.type) {
+                case "price":
+                    list.sort(sortPrice)
+                    if (data.order==="从高到低"){
+                        list.reverse();
+                    }
+                    break
+                case "star":
+                    list.sort(sortStar)
+                    if (data.order==="从高到低"){
+                        list.reverse();
+                    }
+                    break
+                case "rate":
+                    list.sort(sortRate)
+                    if (data.order==="从高到低"){
+                        list.reverse();
+                    }
+                    break
+            }
+
+            commit('set_hotelList',list)
+        },
+        minPrice:async ({commit,state},data)=>{
+            message.success(data.id)
+          commit('getHotelById',data.id)
+
+          let rooms= state.currentHotelInfo.rooms
+            let res = 10000;
+            for(let i =0; i<rooms.length; i++){
+
+                if(rooms[i].price<res){
+                    res=rooms[i].price
+                }
+            }
+            return res
+        },
+
     }
+
+}
+function sortPrice(a,b){
+
+    return a.rate-b.rate;
+}
+function sortRate(a,b){
+    return a.rate-b.rate;
+}
+function sortStar(a,b){
+    return a.rate-b.rate;
 }
 
 export default hotel

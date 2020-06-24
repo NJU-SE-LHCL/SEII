@@ -5,6 +5,7 @@ import com.example.hotel.po.Order;
 import com.example.hotel.util.ServiceException;
 import com.example.hotel.vo.CouponVO;
 import com.example.hotel.vo.HotelVO;
+import com.example.hotel.vo.SearchVO;
 
 import java.util.List;
 
@@ -47,7 +48,7 @@ public interface HotelService {
      */
     int getRoomCurNum(Integer hotelId,String roomType);
     void updateHotelInfo(Integer hotelId,HotelVO hotelVo);
-
+    List<HotelVO> getFilteredHotels(SearchVO searchVO);
 
 
 }

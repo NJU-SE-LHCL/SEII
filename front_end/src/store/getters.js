@@ -13,7 +13,9 @@ const getters = {
   currentOrderRoom: state => state.hotel.currentOrderRoom,
   orderMatchCouponList: state => state.hotel.orderMatchCouponList,
   orderDetailForUser:state=>state.user.orderDetailForUser,
+
   //admin
+  updateUserModalVisible:state=>state.admin.updateUserModalVisible,
   managerList: state => state.admin.managerList,
   addManagerModalVisible: state => state.admin.addManagerModalVisible,
   addManagerParams: state => state.admin.addManagerParams,
@@ -33,6 +35,7 @@ const getters = {
   //hotel
   userOrdersForHotel: state=>state.hotel.userOrdersForHotel,
   tag:state=>state.hotel.tag,
+  detailSearchVisible:state=>state.hotel.detailSearchVisible,
   }
   
   export default getters

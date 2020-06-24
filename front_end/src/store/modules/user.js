@@ -7,7 +7,7 @@ import {
     loginAPI,
     registerAPI,
     getUserInfoAPI,
-    updateUserInfoAPI,
+    updateUserInfoAPI,//
     subCreditAPI
 } from '@/api/user'
 
@@ -24,9 +24,7 @@ const getDefaultState = () => {
         userInfo: {
 
         },
-        userOrderList: [
-
-        ],
+        userOrderList: [],
         detail:false,
         activeOrderID:0,
         orderDetailForUser:{},
