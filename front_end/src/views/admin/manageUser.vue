@@ -1,11 +1,10 @@
 <template>
     <div class="manageUser-wrapper">
         <a-tabs>
-            <a-tab-pane tab="账户管理" key="1">
+            <a-tab-pane tab="酒店管理员账户管理" key="1">
                 <div style="width: 100%; text-align: right; margin:20px 0">
-                     <a-button type="primary" @click="addManager"><a-icon type="plus" />添加用户</a-button>
+                     <a-button type="primary" @click="addUser"><a-icon type="plus" />添加管理员</a-button>
                 </div>
-
                 <a-table
                     :columns="columns"
                     :dataSource="managerList"
@@ -22,20 +21,39 @@
                              <a-button type="danger" >删除用户</a-button>
                          </a-popconfirm>
                     </span>
+                </a-table>
+            </a-tab-pane>
 
-
-
-
+            <a-tab-pane tab="客户账户管理" key="2">
+                <div style="width: 100%; text-align: right; margin:20px 0">
+                    <a-button type="primary" @click="addClient"><a-icon type="plus" />添加客户</a-button>
+                </div>
+                <a-table
+                        :columns="columns"
+                        :dataSource="clientList"
+                        bordered
+                >
+                    <span slot="action" slot-scope="record">
+                         <a-button  @click="changeManagerInfo(record)">修改信息</a-button>
+                         <a-popconfirm
+                                 title="确定删除账户吗?"
+                                 ok-text="是"
+                                 cancel-text="否"
+                                 @confirm="confirmDeleteUser(record.id)"
+                         >
+                             <a-button type="danger" >删除用户</a-button>
+                         </a-popconfirm>
+                    </span>
                 </a-table>
             </a-tab-pane>
         </a-tabs>
-        <AddManagerModal></AddManagerModal>
+        <AddUserModal></AddUserModal>
         <UpdateManagerInfo></UpdateManagerInfo>
     </div>
 </template>
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex'
-import AddManagerModal from './components/addManagerModal'
+import AddUserModal from './components/addUserModal'
 import UpdateManagerInfo from './components/updateManagerInfo'
 import{message} from 'ant-design-vue'
 const columns = [
@@ -78,34 +96,43 @@ export default {
         }
     },
     components: {
-        AddManagerModal,
+        AddUserModal,
         UpdateManagerInfo
     },
     computed: {
         ...mapGetters([
-            'addManagerModalVisible',
+            'addUserModalVisible',
             'managerList',
+            'clientList',
             'updateUserModalVisible'
         ])
     },
     mounted() {
-      this.getManagerList()
+      this.getManagerList();
+      this.getClientList();
     },
     methods: {
         ...mapActions([
             'getManagerList',
             'deleteUser',
             'changeInfo',
+            'getClientList'
         ]),
         ...mapMutations([
-            'set_addManagerModalVisible',
+            'set_addUserModalVisible',
             'set_updateUserModalVisible',
             'set_activeManagerId',
-            'set_UserInfo'
+            'set_UserInfo',
+            'set_addUserType'
         ]),
 
-        addManager(){
-            this.set_addManagerModalVisible(true)
+        addUser(){
+            this.set_addUserModalVisible(true)
+            this.set_addUserType('HotelManager')
+        },
+        addClient(){
+            this.set_addUserModalVisible(true)
+            this.set_addUserType('Client')
         },
         changeManagerInfo(data){
             this.set_UserInfo(data)

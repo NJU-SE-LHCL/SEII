@@ -22,6 +22,8 @@ import {
 
 import { message } from 'ant-design-vue'
 import {getUserInfoAPI, subCreditAPI} from "@/api/user";
+import user from "./user";
+import hotelList from "../../views/hotel/hotelList";
 //import {cancelOrderAPI} from "../../api/order";
 
 const hotelManager = {
@@ -113,8 +115,15 @@ const hotelManager = {
     actions: {
         getAllOrders: async({ state, commit }) => {
             const res = await getAllOrdersAPI()
-            if(res){
-                commit('set_orderList', res)
+            const trueRes=[]
+
+            for(let i=0;i<res.length;i++){
+                if(res[i].hotelId===state.activeHotelId){
+                    trueRes.push(res[i])
+                }
+            }
+            if(trueRes){
+                commit('set_orderList', trueRes)
             }
         },
         addHotel: async({ state, dispatch, commit }) => {
@@ -202,8 +211,6 @@ const hotelManager = {
              if(res) {
                  commit('set_hotelInfo',data)
              }
-
-
         },
         checkInOrder:async ({commit,dispatch,state})=>{
             await checkInOrderAPI(state.activeOrderId)
@@ -250,7 +257,8 @@ const hotelManager = {
                 commit('set_orderList',res)
             }
 
-        }
+        },
+
 
     }
 }

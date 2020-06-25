@@ -1,7 +1,8 @@
 import {
     getManagerListAPI,
     addManagerAPI,
-    deleteUserAPI
+    deleteUserAPI,
+    getClientListAPI
 } from '@/api/admin'
 import { message } from 'ant-design-vue'
 import {changeUserInfoAPI} from "../../api/admin";
@@ -10,7 +11,8 @@ import {changeUserInfoAPI} from "../../api/admin";
 const admin = {
     state: {
         managerList: [],
-        addManagerModalVisible: false,
+        clientList:[],
+        addUserModalVisible: false,
         updateUserModalVisible:false,
         addUserParams: {
             email:'',
@@ -34,16 +36,17 @@ const admin = {
         set_managerList: function (state, data) {
             state.managerList = data
         },
-        set_addManagerModalVisible: function (state, data) {
-            state.addManagerModalVisible = data
+        set_addUserModalVisible: function (state, data) {
+            state.addUserModalVisible = data
         },
         set_addUserParams: function (state, data) {
             state.addUserParams = {
                 ...state.addUserParams,
                 ...data,
             }
-
-
+        },
+        set_addUserType:function(state,data){
+            state.addUserParams.userType=data
         },
         set_updateUserModalVisible: function (state, data) {
             state.updateUserModalVisible = data
@@ -54,9 +57,13 @@ const admin = {
                 ...data,
             }
         },
-        set_activeManagerId:function (state,data) {
+        set_activeManagerId:function (state,data) {//////////////////////
             state.userInfo.id=data
-        }
+        },
+
+        set_clientList:function (state, data) {
+            state.clientList = data
+        },
     },
     actions: {
         getManagerList: async ({commit}) => {
@@ -65,7 +72,15 @@ const admin = {
                 commit('set_managerList', res)
             }
         },
-        addManager: async ({state, commit, dispatch}) => {
+
+        getClientList: async ({commit}) => {
+            const res = await getClientListAPI()
+            if (res) {
+                commit('set_clientList', res)
+            }
+        },
+
+        addUser: async ({state, commit, dispatch}) => {
             const res = await addManagerAPI(state.addUserParams)
             if (res) {
                 commit('set_addUserParams', {
@@ -76,9 +91,10 @@ const admin = {
                     phoneNumber:'',
                     credit:0,
                 })
-                commit('set_addManagerModalVisible', false)
+                commit('set_addUserModalVisible', false)
                 message.success('添加成功')
                 dispatch('getManagerList')
+                dispatch('getClientList')
             } else {
                 message.error('添加失败')
             }
@@ -87,9 +103,10 @@ const admin = {
         deleteUser: async ({state, dispatch}, userId) => {
             const res = await deleteUserAPI(userId)
             if (res) {
-                dispatch('getManagerList')
+                // dispatch('getManagerList')
                 message.success('修改成功')
                 dispatch('getManagerList')
+                dispatch('getClientList')
             } else {
                 message.error('修改失败')
             }

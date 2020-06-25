@@ -156,6 +156,7 @@
     ];
     export default {
         name: 'orderModal',
+        inject:['reload'],
         data() {
             return {
                 formItemLayout: {
@@ -181,7 +182,8 @@
                 'currentHotelId',
                 'currentHotelInfo',
                 'userId',
-                'orderMatchCouponList'
+                'orderMatchCouponList',
+                'haveCredit',
             ]),
 
         },
@@ -196,7 +198,7 @@
             ...mapActions([
                 'addOrder',
                 'getOrderMatchCoupons',
-
+                'judgeCredit',
             ]),
             cancelOrder() {
                 this.set_orderModalVisible(false)
@@ -224,26 +226,30 @@
                 }
             },
             handleSubmit(e) {
-                e.preventDefault();
-                this.form.validateFieldsAndScroll((err, values) => {
-                    if (!err) {
-                        const data = {
-                            hotelId: this.currentHotelId,
-                            hotelName: this.currentHotelInfo.name,
-                            userId: Number(this.userId),
-                            checkInDate: moment(this.form.getFieldValue('date')[0]).format('YYYY-MM-DD'),
-                            checkOutDate: moment(this.form.getFieldValue('date')[1]).format('YYYY-MM-DD'),
-                            roomType: this.currentOrderRoom.roomType == '大床房' ? 'BigBed' : this.currentOrderRoom.roomType == '双床房' ? 'DoubleBed' : 'Family',
-                            roomNum: this.form.getFieldValue('roomNum'),
-                            peopleNum: this.form.getFieldValue('peopleNum'),
-                            haveChild: this.form.getFieldValue('haveChild'),
-                            createDate: '',
-                            price: this.checkedList.length > 0 ? this.finalPrice: this.totalPrice
+
+                    e.preventDefault();
+                    this.form.validateFieldsAndScroll((err, values) => {
+                        if (!err) {
+                            const data = {
+                                hotelId: this.currentHotelId,
+                                hotelName: this.currentHotelInfo.name,
+                                userId: Number(this.userId),
+                                checkInDate: moment(this.form.getFieldValue('date')[0]).format('YYYY-MM-DD'),
+                                checkOutDate: moment(this.form.getFieldValue('date')[1]).format('YYYY-MM-DD'),
+                                roomType: this.currentOrderRoom.roomType == '大床房' ? 'BigBed' : this.currentOrderRoom.roomType == '双床房' ? 'DoubleBed' : 'Family',
+                                roomNum: this.form.getFieldValue('roomNum'),
+                                peopleNum: this.form.getFieldValue('peopleNum'),
+                                haveChild: this.form.getFieldValue('haveChild'),
+                                createDate: '',
+                                price: this.checkedList.length > 0 ? this.finalPrice : this.totalPrice
+                            }
+                            this.addOrder(data)
                         }
-                        this.addOrder(data)
-                    }
-                });
+                        parent.location.reload()
+                    });
+
             },
+
         },
         watch:{
             totalPrice(val) {

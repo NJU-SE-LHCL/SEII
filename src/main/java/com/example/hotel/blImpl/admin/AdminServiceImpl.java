@@ -44,6 +44,11 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public List<User> getAllClients() {
+        return adminMapper.getAllClients();
+    }
+
+    @Override
     public ResponseVO deleteUser(Integer userid) {
         try {
             adminMapper.deleteUser(userid);

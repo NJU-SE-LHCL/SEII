@@ -24,6 +24,7 @@ const getDefaultState = () => {
         userInfo: {
 
         },
+        haveCredit:true,
         userOrderList: [],
         detail:false,
         activeOrderID:0,
@@ -73,7 +74,10 @@ const user = {
         },
         sub_credit:(state,data)=>{
             state.userInfo.credit-=data
-        }
+        },
+        set_haveCredit:(state,data)=>{
+            state.haveCredit=data
+        },
 
     },
 
@@ -177,7 +181,9 @@ const user = {
             }
 
         },
-
+        judgeCredit:async ({commit,state})=>{
+           commit('set_haveCredit',state.userInfo.credit >= 0)
+        },
 
     }
 }

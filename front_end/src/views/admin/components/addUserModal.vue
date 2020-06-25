@@ -1,6 +1,6 @@
 <template>
     <a-modal
-            :visible="addManagerModalVisible"
+            :visible="addUserModalVisible"
             title="添加用户"
             cancelText="取消"
             okText="确定"
@@ -32,7 +32,7 @@
                         placeholder="请填写用户邮箱"
                         v-decorator="[
                         'email',
-                        { rules: [{required: true, message: '请输入用户邮箱', }] }
+                        { rules: [{required: true, message: '请输入邮箱', }] }
                     ]"
                 />
             </a-form-item >
@@ -41,7 +41,17 @@
                         placeholder="请填写用户电话"
                         v-decorator="[
                         'phoneNumber',
-                        { rules: [{required: true, message: '请输入用户电话', }] }
+                        { rules: [{required: true, message: '请输入电话', }] }
+                    ]"
+                />
+            </a-form-item >
+
+            <a-form-item v-bind="formItemLayout" label="信用分">
+                <a-input
+                        placeholder="请填写用户信用分"
+                        v-decorator="[
+                        'credit',
+                        { rules: [{required: false}] }
                     ]"
                 />
             </a-form-item >
@@ -51,7 +61,7 @@
 <script>
     import { mapGetters, mapMutations, mapActions } from 'vuex'
     export default {
-        name: 'addManagerModal',
+        name: 'addUserModal',
         data() {
             return {
                 formItemLayout: {
@@ -68,27 +78,27 @@
         },
         computed: {
             ...mapGetters([
-                'addManagerModalVisible',
+                'addUserModalVisible',
                 'managerList',
             ])
         },
         beforeCreate() {
-            this.form = this.$form.createForm(this, { name: 'addManagerModal' });
+            this.form = this.$form.createForm(this, { name: 'addManagerModal' });/////////////////////
         },
         mounted() {
 
         },
         methods: {
             ...mapMutations([
-                'set_addManagerModalVisible',
+                'set_addUserModalVisible',
                 'set_addUserParams',
             ]),
             ...mapActions([
                 'getManagerList',
-                'addManager',
+                'addUser',
             ]),
             cancel() {
-                this.set_addManagerModalVisible(false)
+                this.set_addUserModalVisible(false)
             },
             handleSubmit(e) {
                 e.preventDefault();
@@ -99,10 +109,10 @@
                             password: this.form.getFieldValue('password'),
                             userName:this.form.getFieldValue('userName'),
                             phoneNumber:this.form.getFieldValue('phoneNumber'),
-                            userType:'HotelManager'
+                            credit:this.form.getFieldValue('credit')
                         }
                         this.set_addUserParams(data)
-                        this.addManager().then(()=>{
+                        this.addUser().then(()=>{
                             this.form.resetFields()
                         })
                     }

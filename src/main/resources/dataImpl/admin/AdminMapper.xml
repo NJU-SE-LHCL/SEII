@@ -9,6 +9,10 @@
         select * from User where usertype='HotelManager'
     </select>
 
+    <select id="getAllClients" resultMap="User">
+        select * from User where usertype='Client'
+    </select>
+
 
     <select id="judge_exist" parameterType="String" resultType="java.lang.Integer">
         select COUNT(*) from User where email=#{email}
