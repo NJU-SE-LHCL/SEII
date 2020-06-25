@@ -15,7 +15,7 @@ public interface AdminService {
 
     /**
      * 添加酒店管理人员账号
-     * @param userForm
+     * @param uservo
      * @return
      */
     ResponseVO addManager(UserVO uservo);
@@ -25,6 +25,13 @@ public interface AdminService {
      * @return
      */
     List<User> getAllManagers();
+
+
+    /**
+     * 获得所有客户人员信息
+     * @return
+     */
+    List<User> getAllClients();
 
     /**
      * 删除用户账号

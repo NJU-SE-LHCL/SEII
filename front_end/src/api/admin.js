@@ -10,6 +10,13 @@ export function getManagerListAPI(){
     })
 }
 
+export function getClientListAPI(){
+    return axios({
+        url: `${api.adminPre}/getAllClients`,
+        method: 'POST'
+    })
+}
+
 export function addManagerAPI(data) {
     return axios({
         url: `${api.adminPre}/addManager`,

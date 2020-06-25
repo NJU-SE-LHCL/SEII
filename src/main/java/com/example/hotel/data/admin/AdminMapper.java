@@ -19,6 +19,8 @@ public interface AdminMapper {
 
     List<User> getAllManagers();
 
+    List<User> getAllClients();
+
     int deleteUser(Integer userid);
 
     int judge_exist(String email);
