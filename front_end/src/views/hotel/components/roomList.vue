@@ -72,7 +72,8 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'orderModalVisible'
+            'orderModalVisible',
+            'haveCredit',
         ])
     },
     monuted() {
@@ -84,11 +85,16 @@ export default {
             'set_currentOrderRoom'
         ]),
         ...mapActions([
-
+            'judgeCredit',
         ]),
         order(record) {
-            this.set_currentOrderRoom(record)
-            this.set_orderModalVisible(true)
+            this.judgeCredit()
+            if(this.haveCredit) {
+                this.set_currentOrderRoom(record)
+                this.set_orderModalVisible(true)
+            }else{
+                this.$message.error("您的用户信用值为负，无法下单，请联系网站管理人员解决~")
+            }
         }
     }
 }

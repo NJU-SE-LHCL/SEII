@@ -186,7 +186,8 @@ export default {
         ]),
     },
     async mounted() {
-        await this.getHotelList()
+        await this.setHotelId()
+        //await this.getHotelList()
         await this.getAllOrders()
         //await this.checkRoomState()
     },
@@ -202,7 +203,8 @@ export default {
 
         ]),
         ...mapActions([
-            'getHotelList',
+            //'getHotelList',
+            'setHotelId',
             'getAllOrders',
             'getHotelCoupon',
             'annulOrder',
@@ -212,6 +214,7 @@ export default {
             'deleteOrder',
             'addCredit',
             'checkRoomState',
+
         ]),
         addHotel() {
             this.set_addHotelModalVisible(true)

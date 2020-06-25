@@ -13,7 +13,7 @@ const getters = {
   currentOrderRoom: state => state.hotel.currentOrderRoom,
   orderMatchCouponList: state => state.hotel.orderMatchCouponList,
   orderDetailForUser:state=>state.user.orderDetailForUser,
-
+  haveCredit:state=>state.user.haveCredit,
   //admin
   updateUserModalVisible:state=>state.admin.updateUserModalVisible,
   managerList: state => state.admin.managerList,

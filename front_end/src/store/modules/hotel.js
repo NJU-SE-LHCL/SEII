@@ -14,6 +14,7 @@ import {
 import {
     orderMatchCouponsAPI,
 } from '@/api/coupon'
+import hotelList from "../../views/hotel/hotelList";
 
 
 const hotel = {
@@ -201,6 +202,21 @@ const hotel = {
                 }
             }
             return res
+        },
+        setHotelId:async ({commit,state})=>{
+            const temp = await getHotelsAPI()
+            let res=[]
+            for(let i=0;i<temp.length;i++){
+                if(Number(temp[i].managerId)-state.userId===0){
+                    res.push(temp[i])
+                    commit('set_activeHotelId',temp[i].id)
+                    break
+                }
+            }
+            if(res){
+                commit('set_hotelList', res)
+                commit('set_hotelListLoading', false)
+            }
         },
 
     }
