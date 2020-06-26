@@ -203,7 +203,7 @@ const hotel = {
             }
             return res
         },
-        setHotelId:async ({commit,state})=>{
+         setHotelId:async ({commit,state})=>{
             const temp = await getHotelsAPI()
             let res=[]
             for(let i=0;i<temp.length;i++){
