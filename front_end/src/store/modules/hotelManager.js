@@ -17,8 +17,11 @@ import {
 } from '@/api/coupon'
 import {
     getHotelByIdAPI,
-
 } from "@/api/hotel";
+
+import{
+    setHotelId,
+} from "./hotel"
 
 import { message } from 'ant-design-vue'
 import {getUserInfoAPI, subCreditAPI} from "@/api/user";
@@ -129,7 +132,7 @@ const hotelManager = {
         addHotel: async({ state, dispatch, commit }) => {
             const res = await addHotelAPI(state.addHotelParams)
             if(res){
-                dispatch('getHotelList')
+                dispatch('setHotelId')
                 commit('set_addHotelParams', {
                     name: '',
                     address: '',
