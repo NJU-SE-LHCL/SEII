@@ -132,7 +132,7 @@ const hotel = {
             const orderDetail=await getUserOrdersAPI(param)
 
             for(let i =0;i<orderDetail.length;i++){
-                if(orderDetail[i].orderState==="已执行"){
+                if(orderDetail[i].orderState==="已入住"){
                     commit('set_tag',"完成订单")
                 }
                 else if(orderDetail[i].orderState==="已撤销"){
