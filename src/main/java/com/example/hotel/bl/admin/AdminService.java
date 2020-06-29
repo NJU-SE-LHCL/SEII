@@ -14,11 +14,11 @@ import java.util.List;
 public interface AdminService {
 
     /**
-     * 添加酒店管理人员账号
+     * 添加账号
      * @param uservo
      * @return
      */
-    ResponseVO addManager(UserVO uservo);
+    ResponseVO addUser(UserVO uservo);
 
     /**
      * 获得所有酒店管理人员信息

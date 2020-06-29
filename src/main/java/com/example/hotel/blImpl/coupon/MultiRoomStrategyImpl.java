@@ -17,6 +17,6 @@ public class MultiRoomStrategyImpl implements CouponMatchStrategy {
     @Override
     public boolean isMatch(OrderVO orderVO, Coupon coupon) {
 
-        return  orderVO.getRoomNum() < 3 || coupon.getCouponType() != 4;
+        return  orderVO.getRoomNum() > coupon.getRoomNumber() && coupon.getCouponType() == 2;
     }
 }

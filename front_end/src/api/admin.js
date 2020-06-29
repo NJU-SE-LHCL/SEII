@@ -19,7 +19,7 @@ export function getClientListAPI(){
 
 export function addManagerAPI(data) {
     return axios({
-        url: `${api.adminPre}/addManager`,
+        url: `${api.adminPre}/addUser`,
         method: 'POST',
         data
     })

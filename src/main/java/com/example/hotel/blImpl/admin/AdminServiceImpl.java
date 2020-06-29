@@ -21,14 +21,17 @@ import java.util.List;
 public class AdminServiceImpl implements AdminService {
     private final static String ACCOUNT_EXIST = "账号已存在";
     private final static String UPDATE_FAILURE = "更新失败";
+    private final static String UPDATE_SUCCESS = "更新成功";
+    private final static String DELETE_SUCCESS= "删除成功";
+//    private final static String DELETE_FAILURE = "删除失败";
     @Autowired
     AdminMapper adminMapper;
     @Override
-    public ResponseVO addManager(UserVO uservo) {
+    public ResponseVO addUser(UserVO uservo) {
         User user = new User();
         BeanUtils.copyProperties(uservo,user);
         String email=user.getEmail();
-        int count=adminMapper.judge_exist(email);//判断个数，如果已存在，添加失败
+        int count=adminMapper.judge_exist(email);
         if(count==1){
             return ResponseVO.buildFailure(ACCOUNT_EXIST);
         }
@@ -55,18 +58,17 @@ public class AdminServiceImpl implements AdminService {
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
-        return ResponseVO.buildSuccess(true);
+        return ResponseVO.buildSuccess(DELETE_SUCCESS);
     }
     @Override
-    public ResponseVO updateInfo(int id, String email,String password,String username,double credit,String phonenumber){
-        try {
-            adminMapper.updateAccount(id,email, password, username,credit, phonenumber);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+    public ResponseVO updateInfo(int id, String email,String password,String username,double credit,String phonenumber) {
+        int count = adminMapper.judge_exist_byId(id);
+        if (count == 1) {
+            adminMapper.updateAccount(id, email, password, username, credit, phonenumber);
+            return ResponseVO.buildSuccess(UPDATE_SUCCESS);
+        } else {
             return ResponseVO.buildFailure(UPDATE_FAILURE);
         }
-        return ResponseVO.buildSuccess(true);
     }
-
 }
 

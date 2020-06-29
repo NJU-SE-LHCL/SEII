@@ -52,6 +52,14 @@ public class Coupon {
      */
     private Integer status;
 
+
+
+    /**
+     * 优惠券最少房间
+     * @return
+     */
+    private Integer RoomNumber;
+
     public LocalDateTime getStartTime() {
         return startTime;
     }
@@ -138,6 +146,14 @@ public class Coupon {
 
     public void setDiscount(double discount) {
         this.discount = discount;
+    }
+
+    public Integer getRoomNumber() {
+        return RoomNumber;
+    }
+
+    public void setRoomNumber(Integer roomNumber) {
+        RoomNumber = roomNumber;
     }
 
     public Coupon() {

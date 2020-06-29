@@ -18,10 +18,10 @@ public class AdminController {
     @Autowired
     AdminService adminService;
 
-    @PostMapping("/addManager")
-    public ResponseVO addManager(@RequestBody UserVO uservo) {
+    @PostMapping("/addUser")
+    public ResponseVO addUser(@RequestBody UserVO uservo) {
 
-        return adminService.addManager(uservo);
+        return adminService.addUser(uservo);
     }
 
     @PostMapping("/getAllManagers")

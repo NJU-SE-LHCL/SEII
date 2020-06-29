@@ -16,7 +16,6 @@ public class TimeCouponStrategyImpl implements CouponMatchStrategy {
      */
     @Override
     public boolean isMatch(OrderVO orderVO, Coupon coupon) {
-
         return  coupon.getCouponType() != 4;
     }
 }

@@ -25,6 +25,8 @@ public interface AdminMapper {
 
     int judge_exist(String email);
 
+    int judge_exist_byId(int id);
+
     int updateAccount(@Param("id") int id,
                       @Param("email") String email,
                       @Param("password") String password,

@@ -13,6 +13,9 @@
         select * from User where usertype='Client'
     </select>
 
+    <select id="judge_exist_byId" parameterType="int" resultType="java.lang.Integer">
+        select COUNT(*) from User where id=#{id}
+    </select>
 
     <select id="judge_exist" parameterType="String" resultType="java.lang.Integer">
         select COUNT(*) from User where email=#{email}
