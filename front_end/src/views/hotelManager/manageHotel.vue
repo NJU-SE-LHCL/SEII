@@ -55,6 +55,17 @@
                             >
                             <a-button type="info" size="small">确认执行</a-button>
                         </a-popconfirm>
+                        <a-divider type="vertical" v-if="record.orderState=='异常'"></a-divider>
+                            <a-popconfirm
+                                    title="你确定要将异常订单延迟入住吗？"
+                                    @confirm="confirmCheckIn(record.id)"
+                                    @cancel="cancelCancelOrder"
+                                    okText="确定"
+                                    cancelText="取消"
+                                    v-if="record.orderState == '异常'"
+                            >
+                            <a-button type="info" size="small">延迟入住</a-button>
+                        </a-popconfirm>
                         <a-divider type="vertical"></a-divider>
                         <a-popconfirm
                             title="确定想删除该订单吗？"
@@ -189,7 +200,7 @@ export default {
         await this.setHotelId()
         //await this.getHotelList()
         await this.getAllOrders()
-        //await this.checkRoomState()
+        await this.checkRoomState()
     },
     methods: {
         ...mapMutations([
@@ -249,9 +260,7 @@ export default {
             this.checkInOrder()
             this.addCredit()
         },
-        checkRoomState(){
-            this.checkRoomState()
-        }
+
     }
 }
 </script>

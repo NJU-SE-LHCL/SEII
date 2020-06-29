@@ -185,13 +185,10 @@ const hotelManager = {
                 message.error('添加失败')
             }
         },
-        annulOrder: async({ state, commit },data) => {
+        annulOrder: async({ state, dispatch,commit },data) => {
             await cancelOrderAPI(data)
 
-            const res = await getAllOrdersAPI()
-            if(res){
-                commit('set_orderList', res)
-            }
+            dispatch('getAllOrders')
         },
         getOrderDetail: async({state,commit})=>{
             const res= await getOrderDetailAPI(state.activeOrderId)
@@ -217,17 +214,11 @@ const hotelManager = {
         },
         checkInOrder:async ({commit,dispatch,state})=>{
             await checkInOrderAPI(state.activeOrderId)
-            const res = await getAllOrdersAPI()
-            if(res){
-                commit('set_orderList', res)
-            }
+            dispatch('getAllOrders')
         },
         deleteOrder:async ({commit,dispatch,state},data)=>{
             await deleteOrderAPI(data)
-            const res = await getAllOrdersAPI()
-            if(res){
-                commit('set_orderList', res)
-            }
+            dispatch('getAllOrders')
         },
         addCredit:async ({commit,state})=>{
             const res = await getOrderDetailAPI(state.activeOrderId)
@@ -241,24 +232,21 @@ const hotelManager = {
             }
             await subCreditAPI(param)
         },
-        checkRoomState:async ({commit,state})=>{
+        checkRoomState:async ({commit,dispatch,state})=>{
             for(var i =0;i<state.orderList.length;i++){
                 var orderDate=state.orderList[i].checkOutDate
-                const pendix="00:00:00 UTC"
-                if(Date.parse(orderDate+pendix)>=new Date()){
+                //message.success(Date.parse(orderDate)-new Date())
+                if(Date.parse(orderDate)-new Date()<0 && state.orderList[i].orderState==='已预订'){
                     await setAbnormalOrderAPI(state.orderList[i].id)
                     const user =await getUserInfoAPI(state.orderList[i].userId)
                     const param={
-                        id:state.orderList[i].id,
+                        id:state.orderList[i].userId,
                         credit:user.credit-state.orderList[i].price
                     }
                     await subCreditAPI(param)
                 }
             }
-            const res = await getAllOrdersAPI()
-            if(res){
-                commit('set_orderList',res)
-            }
+            dispatch('getAllOrders')
 
         },
 
