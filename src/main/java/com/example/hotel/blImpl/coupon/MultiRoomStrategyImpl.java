@@ -10,7 +10,7 @@ public class MultiRoomStrategyImpl implements CouponMatchStrategy {
 
 
     /**
-     * 判断某个订单是否满足躲房间优惠策略
+     * 判断某个订单是否满足多房间优惠策略
      * @param orderVO
      * @return
      */

@@ -45,10 +45,35 @@ public interface OrderService {
      * @return
      */
     List<Order> getHotelOrders(Integer hotelId);
-
+    /**
+     * 获得对应订单信息
+     * @param orderid
+     * @return
+     */
     Order getOrderDetail(Integer orderid);
+    /**
+     * 标记订单状态已入住
+     * @param orderid
+     * @return
+     */
     ResponseVO checkInOrder(Integer orderid);
-    ResponseVO deleteOrder(Integer orderid);
+
+    /**
+     * 标记订单状态异常
+     * @param orderid
+     * @return
+     */
     ResponseVO setAbnormalOrder(Integer orderid);
+    /**
+     * 返回某用户在某酒店的全部订单
+     * @param userid,hotelid
+     * @return
+     */
     List<Order> getUserOrdersForHotel(Integer userid,Integer hotelid);
+    /**
+     * 删除对应订单
+     * @param orderid
+     * @return
+     */
+    ResponseVO deleteOrder(Integer orderid);
 }
