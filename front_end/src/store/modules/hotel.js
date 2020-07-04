@@ -21,7 +21,6 @@ const hotel = {
     state: {
         userId:0,
         hotelList: [
-            
         ],
         hotelListParams: {
             pageNo: 0,

@@ -41,7 +41,7 @@ public class AdminServiceImplTest {
 
     @Test
     @Transactional
-    public void addManagerTest2() {
+    public void addUser() {
         UserVO uservo = new UserVO();
         uservo.setEmail("111121@qq.com");
         uservo.setPassword("123456");

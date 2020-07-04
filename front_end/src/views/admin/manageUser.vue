@@ -91,8 +91,6 @@ export default {
             pagination: {},
             columns,
             data: [],
-            form: this.$form.createForm(this, { name: 'manageUser' }),
-            form2:this.$form.createForm(this, { name: 'changeInfo' })
         }
     },
     components: {
